@@ -1,0 +1,30 @@
+@ContosoPizza_HostAddress = http://localhost:5246
+
+GET {{ContosoPizza_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+GET {{ContosoPizza_HostAddress}}/pizza/
+Accept: application/json
+
+###
+GET {{ContosoPizza_HostAddress}}/pizza/1
+Accept: application/json
+
+###
+
+GET {{ContosoPizza_HostAddress}}/api/myentities/
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6InVzZXIiLCJuYmYiOjE3MjExMTkzOTksImV4cCI6MTcyMTEyMjk5OSwiaWF0IjoxNzIxMTE5Mzk5fQ.5y2IH24Xn_0ytk7CdN8k8F9MWuY42BhamEcHfho2BMY
+
+###
+
+POST {{ContosoPizza_HostAddress}}/auth/login
+Content-Type: application/json
+
+{
+    "Username": "user",
+    "Password": "password"
+}
+
+###
