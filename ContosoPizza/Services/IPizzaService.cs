@@ -1,5 +1,6 @@
 using ContosoPizza.Models;
 
+namespace ContosoPizza.Services;
 public interface IPizzaService
 {
     Task<IEnumerable<Pizza>> GetAllAsync();

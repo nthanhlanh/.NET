@@ -8,7 +8,9 @@ dotnet run
 # include
 - WebAPI
 - JWT(UseAuthentication,UseAuthorization,AuthorizationMiddleware)
+- Identity
 - Migrations:
    + dotnet ef migrations add MYEntityUpdateForAge
    + dotnet ef database update
 - 
+

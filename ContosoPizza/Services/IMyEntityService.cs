@@ -1,6 +1,8 @@
 using ContosoPizza.Data;
 using ContosoPizza.Models;
 
+namespace ContosoPizza.Services;
+
 public interface IMyEntityService
 {
     Task<IEnumerable<MyEntity>> GetAllAsync();

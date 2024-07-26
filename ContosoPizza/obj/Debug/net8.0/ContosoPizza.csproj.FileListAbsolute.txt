@@ -110,3 +110,10 @@ C:\Users\lanhnt.UNITEK\Desktop\dotnet\ContosoPizza\bin\Debug\net8.0\Microsoft.Id
 C:\Users\lanhnt.UNITEK\Desktop\dotnet\ContosoPizza\bin\Debug\net8.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
 C:\Users\lanhnt.UNITEK\Desktop\dotnet\ContosoPizza\bin\Debug\net8.0\Microsoft.IdentityModel.Tokens.dll
 C:\Users\lanhnt.UNITEK\Desktop\dotnet\ContosoPizza\bin\Debug\net8.0\System.IdentityModel.Tokens.Jwt.dll
+C:\Users\lanhnt.UNITEK\Desktop\dotnet\ContosoPizza\obj\Debug\net8.0\ContosoPizza.sourcelink.json
+C:\Users\lanhnt.UNITEK\Desktop\dotnet\ContosoPizza\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+C:\Users\lanhnt.UNITEK\Desktop\dotnet\ContosoPizza\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+C:\Users\lanhnt.UNITEK\Desktop\dotnet\ContosoPizza\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\lanhnt.UNITEK\Desktop\dotnet\ContosoPizza\bin\Debug\net8.0\Microsoft.Extensions.Identity.Core.dll
+C:\Users\lanhnt.UNITEK\Desktop\dotnet\ContosoPizza\bin\Debug\net8.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\lanhnt.UNITEK\Desktop\dotnet\ContosoPizza\bin\Debug\net8.0\Microsoft.Extensions.Options.dll

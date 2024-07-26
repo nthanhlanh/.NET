@@ -2,6 +2,8 @@ using ContosoPizza.Data;
 using ContosoPizza.Models;
 using Microsoft.EntityFrameworkCore;
 
+namespace ContosoPizza.Services;
+
 public class MyEntityService : IMyEntityService
 {
     private readonly ApplicationDbContext _context;
