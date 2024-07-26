@@ -4,6 +4,7 @@ namespace ContosoPizza.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[ApiExplorerSettings(GroupName = "v2")]
 public class WeatherForecast1Controller : ControllerBase
 {
     private static readonly string[] Summaries = new[]

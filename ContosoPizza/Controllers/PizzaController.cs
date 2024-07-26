@@ -7,6 +7,7 @@ namespace ContosoPizza.Controllers;
 
 [ApiController]
 [Route("[controller]")]
+[ApiExplorerSettings(GroupName = "v2")]
 [Authorize]
 public class PizzaController : ControllerBase
 {

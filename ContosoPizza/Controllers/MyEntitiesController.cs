@@ -8,6 +8,7 @@ namespace ContosoPizza.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ApiExplorerSettings(GroupName = "v2")]
     public class MyEntitiesController : ControllerBase
     {
         private readonly IMyEntityService _service;

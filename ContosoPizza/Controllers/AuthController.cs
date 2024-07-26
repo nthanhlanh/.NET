@@ -11,6 +11,7 @@ namespace ContosoPizza.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class AuthController : ControllerBase
     {
         private readonly IConfiguration _config;
