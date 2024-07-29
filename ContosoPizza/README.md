@@ -1,6 +1,12 @@
 # install
 - install dotnet SDK 8.0, 
 - dotnet tool install --global dotnet-ef 
+# database
+- Database=Test
+- Username=postgres
+- Password=mysecretpassword
+- run lệnh Migrations để khởi tạo database
+   + dotnet ef database update
 
 # run command line
 dotnet run
