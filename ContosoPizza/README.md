@@ -1,6 +1,7 @@
 # install
 - install dotnet SDK 8.0, 
-- dotnet tool install --global dotnet-ef 
+- dotnet tool install --global dotnet-ef
+- postgres version 13
 # database
 - Database=Test
 - Username=postgres
