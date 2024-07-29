@@ -80,7 +80,10 @@ public class AuthService : IAuthService
     {
         var user = await _userManager.FindByEmailAsync(login.Username);
         if (user == null)
-            throw new UnauthorizedAccessException("Invalid email or password");
+            throw new UnauthorizedAccessException("Invalid email ");
+        var isPasswordValid = await _userManager.CheckPasswordAsync(user, login.Password);
+        if (!isPasswordValid)
+            throw new UnauthorizedAccessException("Invalid password");
 
         var result = await _signInManager.PasswordSignInAsync(login.Username, login.Password, login.RememberMe, lockoutOnFailure: false);
         if (result.Succeeded)
@@ -91,6 +94,20 @@ public class AuthService : IAuthService
             await _context.SaveChangesAsync();
 
             return new LoginResponse { Token = tokenString, RefreshToken = refreshToken };
+        }
+        if (result.IsLockedOut)
+        {
+            throw new UnauthorizedAccessException("Account is locked");
+        }
+
+        if (result.IsNotAllowed)
+        {
+            throw new UnauthorizedAccessException("User not allowed");
+        }
+
+        if (result.RequiresTwoFactor)
+        {
+            throw new UnauthorizedAccessException("Two-factor authentication required");
         }
 
         throw new UnauthorizedAccessException("Invalid login attempt");
@@ -129,6 +146,7 @@ public class AuthService : IAuthService
     public async Task<IActionResult> RegisterAsync(Login model)
     {
         var user = new ApplicationUser { UserName = model.Username, Email = model.Username };
+        user.EmailConfirmed=true;
         var result = await _userManager.CreateAsync(user, model.Password);
 
         if (!result.Succeeded)
