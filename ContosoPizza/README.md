@@ -20,4 +20,5 @@ dotnet run
    + dotnet ef migrations add MYEntityUpdateForAge
    + dotnet ef database update
 - Serilog: //cấu hình file log
+- swagger
 

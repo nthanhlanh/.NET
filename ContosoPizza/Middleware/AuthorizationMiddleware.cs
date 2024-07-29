@@ -1,7 +1,4 @@
-using Microsoft.AspNetCore.Http;
-using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace ContosoPizza.Helprs
 {
@@ -25,7 +22,10 @@ namespace ContosoPizza.Helprs
             }
             else
             {
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
+                if (context.User == null || context.User.Identity == null)
+                {
+                    throw new ArgumentNullException("The context.User is null  ", nameof(context.User));
+                }
                 if (!context.User.Identity.IsAuthenticated)
                 {
                     context.Response.StatusCode = StatusCodes.Status401Unauthorized;
@@ -46,7 +46,6 @@ namespace ContosoPizza.Helprs
                 // }
                 await _next(context);
             }
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
         }
     }

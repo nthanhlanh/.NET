@@ -1,49 +1,39 @@
-using ContosoPizza.Data;
 using ContosoPizza.Models;
-using Microsoft.EntityFrameworkCore;
+using ContosoPizza.Repositories;
 
 namespace ContosoPizza.Services;
 
 public class MyEntityService : IMyEntityService
 {
-    private readonly ApplicationDbContext _context;
+    private readonly IMyEntityRepository _myEntityRepository;
 
-    public MyEntityService(ApplicationDbContext context)
+    public MyEntityService(IMyEntityRepository myEntityRepository)
     {
-        _context = context;
+        _myEntityRepository = myEntityRepository;
     }
 
     public async Task<IEnumerable<MyEntity>> GetAllAsync()
     {
-        return await _context.MyEntities.ToListAsync();
+        return await _myEntityRepository.GetAllAsync();
     }
 
     public async Task<MyEntity> GetByIdAsync(int id)
     {
-#pragma warning disable CS8603 // Possible null reference return.
-        return await _context.MyEntities.FindAsync(id);
-#pragma warning restore CS8603 // Possible null reference return.
+        return await _myEntityRepository.GetByIdAsync(id);
     }
 
     public async Task AddAsync(MyEntity entity)
     {
-        _context.MyEntities.Add(entity);
-        await _context.SaveChangesAsync();
+        await _myEntityRepository.AddAsync(entity);
     }
 
     public async Task UpdateAsync(MyEntity entity)
     {
-        _context.MyEntities.Update(entity);
-        await _context.SaveChangesAsync();
+        await _myEntityRepository.UpdateAsync(entity);
     }
 
     public async Task DeleteAsync(int id)
     {
-        var entity = await _context.MyEntities.FindAsync(id);
-        if (entity != null)
-        {
-            _context.MyEntities.Remove(entity);
-            await _context.SaveChangesAsync();
-        }
+        await _myEntityRepository.DeleteAsync(id);
     }
 }

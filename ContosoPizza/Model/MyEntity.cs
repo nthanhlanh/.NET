@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ContosoPizza.Models;
 
-[Table("MyEntities1")]
+[Table("MyEntities")]
 public class MyEntity
 {
     [Key]

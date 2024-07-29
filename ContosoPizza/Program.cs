@@ -2,6 +2,7 @@ using System.Text;
 using ContosoPizza.Controllers;
 using ContosoPizza.Data;
 using ContosoPizza.Helprs;
+using ContosoPizza.Repositories;
 using ContosoPizza.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -15,6 +16,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+// Đăng ký Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
@@ -70,9 +72,12 @@ builder.Services.AddCors(options =>
 });
 
 // Thêm dịch vụ tùy chỉnh
+// Đăng ký các repository
+builder.Services.AddScoped<IMyEntityRepository, MyEntityRepository>();
+
+// Đăng ký các service
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMyEntityService, MyEntityService>();
-builder.Services.AddScoped<IPizzaService, PizzaService>();
 
 // Cấu hình JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
