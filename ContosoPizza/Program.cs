@@ -1,5 +1,5 @@
 using System.Text;
-using System.Text.Json.Serialization;
+using ContosoPizza.Controllers;
 using ContosoPizza.Data;
 using ContosoPizza.Helprs;
 using ContosoPizza.Services;
@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,8 +63,14 @@ builder.Services.AddSwaggerGen(c =>
     // var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     // c.IncludeXmlComments(xmlPath);
 });
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAll",
+        builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+});
 
 // Thêm dịch vụ tùy chỉnh
+builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMyEntityService, MyEntityService>();
 builder.Services.AddScoped<IPizzaService, PizzaService>();
 
@@ -93,6 +100,16 @@ builder.Services.AddAuthentication(options =>
     };
 });
 builder.Services.AddAuthorization();
+// Cấu hình Serilog
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.Console()
+    .WriteTo.File("D:/Temp/logs/log.txt", rollingInterval: RollingInterval.Day) // Ghi log vào file
+    .CreateLogger();
+
+// Thay thế LoggerFactory mặc định bằng Serilog
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog();
 
 
 var app = builder.Build();
@@ -114,7 +131,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
+app.UseCors("AllowAll");
 app.UseRouting();
 app.MapControllers();
 
