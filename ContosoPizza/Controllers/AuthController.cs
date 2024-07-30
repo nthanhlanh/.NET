@@ -1,6 +1,7 @@
 using ContosoPizza.Dto;
 using ContosoPizza.Models;
 using ContosoPizza.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ContosoPizza.Controllers
@@ -18,6 +19,7 @@ namespace ContosoPizza.Controllers
         }
 
         [HttpPost("register")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register([FromBody] Login model)
         {
             return await _authService.RegisterAsync(model);
@@ -45,6 +47,7 @@ namespace ContosoPizza.Controllers
         }
 
         [HttpPost("assign-role")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AssignRoleToUser([FromQuery] string email, [FromQuery] string roleName)
         {
             return await _authService.AssignRoleToUserAsync(email, roleName);

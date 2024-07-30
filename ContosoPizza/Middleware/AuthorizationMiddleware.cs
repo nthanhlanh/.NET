@@ -15,7 +15,7 @@ namespace ContosoPizza.Helprs
         {
             //var pathsToSkip = new[] { "/auth/login" };//, "/api/auth/register"
 
-            if (context.Request.Path == "/auth/login" || context.Request.Path == "/auth/register")
+            if (context.Request.Path == "/auth/login")
             {
                 // Bỏ qua xác thực
                 await _next(context);

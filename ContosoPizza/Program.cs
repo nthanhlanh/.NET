@@ -74,10 +74,14 @@ builder.Services.AddCors(options =>
 // Thêm dịch vụ tùy chỉnh
 // Đăng ký các repository
 builder.Services.AddScoped<IMyEntityRepository, MyEntityRepository>();
+builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
 
 // Đăng ký các service
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMyEntityService, MyEntityService>();
+builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IUserGroupService, UserGroupService>();
 
 // Cấu hình JWT Authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
@@ -107,7 +111,7 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddAuthorization();
 // Cấu hình Serilog
 Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Debug()
+    .MinimumLevel.Information()
     .WriteTo.Console()
     .WriteTo.File("D:/Temp/logs/log.txt", rollingInterval: RollingInterval.Day) // Ghi log vào file
     .CreateLogger();
