@@ -18,6 +18,8 @@ namespace ContosoPizza.Data
         public DbSet<MyEntity> MyEntities { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<UserGroup> UserGroups { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<GroupPermission> GroupPermissions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +37,7 @@ namespace ContosoPizza.Data
                 .HasOne(ug => ug.Group)
                 .WithMany(g => g.UserGroups)
                 .HasForeignKey(ug => ug.GroupId);
+
         }
     }
 

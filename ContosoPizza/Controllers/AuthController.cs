@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ContosoPizza.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     [ApiExplorerSettings(GroupName = "v1")]
     public class AuthController : ControllerBase
     {

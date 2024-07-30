@@ -1,4 +1,6 @@
 using System.Security.Claims;
+using System.Text.Json;
+using ContosoPizza.Repositories;
 
 namespace ContosoPizza.Helprs
 {
@@ -11,41 +13,48 @@ namespace ContosoPizza.Helprs
             _next = next;
         }
 
-        public async Task InvokeAsync(HttpContext context)
+        public async Task InvokeAsync(HttpContext context, IUserGroupRepository iUserGroupRepository, IGroupPermissionRepository iGroupPermissionRepository)
         {
-            //var pathsToSkip = new[] { "/auth/login" };//, "/api/auth/register"
-
-            if (context.Request.Path == "/auth/login")
+            if (context.Request.Path == "/api/auth/login")
             {
                 // Bỏ qua xác thực
                 await _next(context);
+                return;
             }
-            else
+
+            if (context.User == null || context.User.Identity == null)
             {
-                if (context.User == null || context.User.Identity == null)
-                {
-                    throw new ArgumentNullException("The context.User is null  ", nameof(context.User));
-                }
-                if (!context.User.Identity.IsAuthenticated)
-                {
-                    context.Response.StatusCode = StatusCodes.Status401Unauthorized;
-                    await context.Response.WriteAsync("User is not authenticated.");
-                    return;
-                }
-                // Kiểm tra quyền truy cập
-                var userRoles = context.User.Claims.Where(c => c.Type == ClaimTypes.Role).Select(c => c.Value).ToList();
-                foreach (var user in userRoles)
-                {
-                    Console.WriteLine($"Type: {user}");
-                }
-                // if (!userRoles.Contains("Admin"))
-                // {
-                //     context.Response.StatusCode = StatusCodes.Status403Forbidden;
-                //     await context.Response.WriteAsync("User does not have the necessary role.");
-                //     return;
-                // }
-                await _next(context);
+                throw new ArgumentNullException("The context.User is null  ", nameof(context.User));
             }
+            if (!context.User.Identity.IsAuthenticated)
+            {
+                context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                await context.Response.WriteAsync("User is not authenticated.");
+                return;
+            }
+            // Lấy thông tin người dùng từ HttpContext
+            var userId = context.User?.Identity?.Name;
+            if (userId != null)
+            {
+                // Lấy danh sách các nhóm mà người dùng thuộc về
+                var groups = await iUserGroupRepository.GetUserGroupsAsync(userId);
+
+                // Kiểm tra quyền của từng nhóm
+                foreach (var group in groups)
+                {
+                    var permissions = await iGroupPermissionRepository.GetPermissionsByGroupIdAsync(group.Id);
+                    // Kiểm tra xem nhóm có quyền cần thiết không
+                    if (permissions.Any(p => p.Name == context.Request.Path))
+                    {
+                        // Nếu có quyền, tiếp tục xử lý
+                        await _next(context);
+                        return;
+                    }
+                }
+            }
+            // Nếu không có quyền, trả về lỗi 403 Forbidden
+            context.Response.StatusCode = StatusCodes.Status403Forbidden;
+            await context.Response.WriteAsync("Forbidden: You do not have the required permissions.");
 
         }
     }
