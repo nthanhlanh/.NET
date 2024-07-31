@@ -3,72 +3,56 @@
     <div class="login-container">
       <form @submit.prevent="login">
         <!-- Email input -->
-        <div class="form-outline mb-4">
-          <input
-            type="email"
-            id="form2Example1"
-            class="form-control"
-            v-model="email"
-          />
-          <label class="form-label" for="form2Example1">Email address</label>
-        </div>
-
+        <MDBInput
+          type="email"
+          label="Email address"
+          id="email"
+          v-model="email"
+          wrapperClass="mb-4"
+        />
         <!-- Password input -->
-        <div class="form-outline mb-4">
-          <input
-            type="password"
-            id="form2Example2"
-            class="form-control"
-            v-model="password"
-          />
-          <label class="form-label" for="form2Example2">Password</label>
-        </div>
-
+        <MDBInput
+          type="password"
+          label="Password"
+          id="password"
+          v-model="password"
+          wrapperClass="mb-4"
+        />
         <!-- 2 column grid layout for inline styling -->
-        <div class="row mb-4">
-          <div class="col d-flex justify-content-center">
+        <MDBRow class="mb-4">
+          <MDBCol class="d-flex justify-content-center">
             <!-- Checkbox -->
-            <div class="form-check">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value=""
-                id="form2Example34"
-                v-model="rememberMe"
-              />
-              <label class="form-check-label" for="form2Example34">
-                Remember me
-              </label>
-            </div>
-          </div>
-
-          <div class="col">
+            <MDBCheckbox
+              label="Remember me"
+              id="rememberMe"
+              v-model="rememberMe"
+              wrapperClass="mb-3 mb-md-0"
+            />
+          </MDBCol>
+          <MDBCol>
             <!-- Simple link -->
             <a href="#!">Forgot password?</a>
-          </div>
-        </div>
-
+          </MDBCol>
+        </MDBRow>
         <!-- Submit button -->
-        <button type="submit" class="btn btn-primary btn-block mb-4">
-          Sign in
-        </button>
+        <MDBBtn type="submit" color="primary" block>Sign in</MDBBtn>
 
         <!-- Register buttons -->
         <div class="text-center">
           <p>Not a member? <a href="#!">Register</a></p>
           <p>or sign up with:</p>
-          <button type="button" class="btn btn-secondary btn-floating mx-1">
-            <i class="fab fa-facebook-f"></i>
-          </button>
-          <button type="button" class="btn btn-secondary btn-floating mx-1">
-            <i class="fab fa-google"></i>
-          </button>
-          <button type="button" class="btn btn-secondary btn-floating mx-1">
-            <i class="fab fa-twitter"></i>
-          </button>
-          <button type="button" class="btn btn-secondary btn-floating mx-1">
-            <i class="fab fa-github"></i>
-          </button>
+          <MDBBtn color="secondary" floating class="mx-1">
+            <MDBIcon iconStyle="fab" icon="facebook-f"/>
+          </MDBBtn>
+          <MDBBtn color="secondary" floating class="mx-1">
+            <MDBIcon iconStyle="fab" icon="google"/>
+          </MDBBtn>
+          <MDBBtn color="secondary" floating class="mx-1">
+            <MDBIcon iconStyle="fab" icon="twitter"/>
+          </MDBBtn>
+          <MDBBtn color="secondary" floating class="mx-1">
+            <MDBIcon iconStyle="fab" icon="github"/>
+          </MDBBtn>
         </div>
       </form>
     </div>
@@ -77,24 +61,58 @@
 
 
 <script>
-// import { useStore } from 'vuex';
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+  import {
+    MDBRow,
+    MDBCol,
+    MDBInput,
+    MDBCheckbox,
+    MDBBtn,
+    MDBIcon
+  } from "mdb-vue-ui-kit";
 
 export default {
   name: "LoginPage",
-  methods: {
-    async login() {
-      try {
-        await this.$store.dispatch("login", {
-          Username: this.email,
-          Password: this.password,
-          RememberMe: this.rememberMe || false,
-        });
-        this.$router.push("/"); // Redirect to home or other authenticated page
-      } catch (error) {
-        console.error("Login failed:", error);
-        // Handle error and show message if necessary
-      }
+  components: {
+      MDBRow,
+      MDBCol,
+      MDBInput,
+      MDBCheckbox,
+      MDBBtn,
+      MDBIcon
     },
+  setup() {
+    const email = ref('');
+    const password = ref('');
+    const rememberMe = ref(false);
+    const router = useRouter();
+    const store = useStore();
+
+    const login = async () => {
+      try {
+        // Gọi API đăng nhập với định dạng dữ liệu yêu cầu
+        await store.dispatch("login", {
+          Username: email.value,
+          Password: password.value,
+          RememberMe: rememberMe.value ,
+        });
+
+        // Redirect đến trang chính sau khi đăng nhập thành công
+        router.push('/');
+      } catch (error) {
+        console.error('Login failed:', error);
+        // Hiển thị thông báo lỗi hoặc xử lý lỗi
+      }
+    };
+
+    return {
+      email,
+      password,
+      rememberMe,
+      login,
+    };
   },
 };
 </script>

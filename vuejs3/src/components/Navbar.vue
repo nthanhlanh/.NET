@@ -1,95 +1,56 @@
 <template>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-body-tertiary">
-    <!-- Container wrapper -->
-    <div class="container-fluid">
-      <!-- Toggle button -->
-      <button
-        data-mdb-collapse-init
-        class="navbar-toggler"
-        type="button"
-        data-mdb-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
+  <MDBNavbar expand="lg" light bgColor="light">
+    <MDBContainer fluid>
+      <MDBNavbarToggler
+        v-bind:target="'#navbarSupportedContent'"
+        v-bind:aria-controls="'navbarSupportedContent'"
+        v-bind:aria-expanded="false"
+        v-bind:aria-label="'Toggle navigation'"
       >
-        <i class="fas fa-bars"></i>
-      </button>
+        <MDBIcon fas icon="bars" />
+      </MDBNavbarToggler>
 
-      <!-- Collapsible wrapper -->
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <!-- Navbar brand -->
-        <a class="navbar-brand mt-2 mt-lg-0" href="#">
+      <MDBCollapse navbar id="navbarSupportedContent">
+        <MDBNavbarBrand href="#">
           <img
             src="https://mdbcdn.b-cdn.net/img/logo/mdb-transaprent-noshadows.webp"
             height="15"
             alt="MDB Logo"
             loading="lazy"
           />
-        </a>
-        <!-- Left links -->
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="/">Dashboard</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/Conntacts">Contacts</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/Products">Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="/login">Login</a>
-          </li>
-        </ul>
-        <!-- Left links -->
-      </div>
-      <!-- Collapsible wrapper -->
+        </MDBNavbarBrand>
+        <MDBNavbarNav left class="me-auto mb-2 mb-lg-0">
+          <MDBNavbarItem href="/"> Dashboard </MDBNavbarItem>
+          <MDBNavbarItem href="/Conntacts"> Contacts </MDBNavbarItem>
+          <MDBNavbarItem href="/Products"> Products </MDBNavbarItem>
+          <MDBNavbarItem href="/login"> Login </MDBNavbarItem>
+        </MDBNavbarNav>
+      </MDBCollapse>
 
-      <!-- Right elements -->
       <div class="d-flex align-items-center">
-        <!-- Icon -->
-        <a class="text-reset me-3" href="#">
-          <i class="fas fa-shopping-cart"></i>
-        </a>
-
-        <!-- Notifications -->
-        <div class="dropdown">
-          <a
-            class="text-reset me-3 dropdown-toggle hidden-arrow"
-            href="#"
-            id="navbarDropdownMenuLink"
-            role="button"
+        <MDBIcon fas icon="shopping-cart" class="text-reset me-3" />
+        <MDBDropdown v-model="dropdownNotifications">
+          <MDBDropdownToggle
+            tag="a"
+            class="text-reset me-3 hidden-arrow"
             aria-expanded="false"
-            data-mdb-toggle="dropdown"
+            @click="dropdownNotifications = !dropdownNotifications"
           >
-            <i class="fas fa-bell"></i>
-            <span class="badge rounded-pill badge-notification bg-danger">1</span>
-          </a>
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="navbarDropdownMenuLink"
-          >
-            <li>
-              <a class="dropdown-item" href="#">Some news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Another news</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Something else here</a>
-            </li>
-          </ul>
-        </div>
-        <!-- Avatar -->
-        <div class="dropdown">
-          <a
+            <MDBIcon fas icon="bell" />
+            <MDBBadge color="danger" class="rounded-pill">1</MDBBadge>
+          </MDBDropdownToggle>
+          <MDBDropdownMenu right aria-labelledby="navbarDropdownMenuLink">
+            <MDBDropdownItem href="#">Some news</MDBDropdownItem>
+            <MDBDropdownItem href="#">Another news</MDBDropdownItem>
+            <MDBDropdownItem href="#">Something else here</MDBDropdownItem>
+          </MDBDropdownMenu>
+        </MDBDropdown>
+        <MDBDropdown v-model="dropdownAvatars">
+          <MDBDropdownToggle
+            tag="a"
             class="dropdown-toggle d-flex align-items-center hidden-arrow"
-            href="#"
-            id="navbarDropdownMenuAvatar"
-            role="button"
             aria-expanded="false"
-            data-mdb-toggle="dropdown"
+            @click="dropdownAvatars = !dropdownAvatars"
           >
             <img
               src="https://mdbcdn.b-cdn.net/img/new/avatars/2.webp"
@@ -98,37 +59,81 @@
               alt="Black and White Portrait of a Man"
               loading="lazy"
             />
-          </a>
-          <ul
-            class="dropdown-menu dropdown-menu-end"
-            aria-labelledby="navbarDropdownMenuAvatar"
-          >
-            <li>
-              <a class="dropdown-item" href="#">My profile</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Settings</a>
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Logout</a>
-            </li>
-          </ul>
-        </div>
+          </MDBDropdownToggle>
+          <MDBDropdownMenu right aria-labelledby="navbarDropdownMenuAvatar">
+            <MDBDropdownItem href="#">My profile</MDBDropdownItem>
+            <MDBDropdownItem href="#">Settings</MDBDropdownItem>
+            <MDBDropdownItem href="#" @click="logout">Logout</MDBDropdownItem>
+          </MDBDropdownMenu>
+        </MDBDropdown>
       </div>
-      <!-- Right elements -->
-    </div>
-    <!-- Container wrapper -->
-  </nav>
-  <!-- Navbar -->
+    </MDBContainer>
+  </MDBNavbar>
 </template>
 
 <script>
+import {
+  MDBNavbar,
+  MDBContainer,
+  MDBNavbarToggler,
+  MDBCollapse,
+  MDBNavbarBrand,
+  MDBNavbarNav,
+  MDBNavbarItem,
+  MDBIcon,
+  MDBDropdown,
+  MDBDropdownToggle,
+  MDBDropdownMenu,
+  MDBDropdownItem,
+  MDBBadge,
+} from "mdb-vue-ui-kit";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
 export default {
-  name: 'NavbarPage',
+  name: "NavbarComponent",
+  components: {
+    MDBNavbar,
+    MDBContainer,
+    MDBNavbarToggler,
+    MDBCollapse,
+    MDBNavbarBrand,
+    MDBNavbarNav,
+    MDBNavbarItem,
+    MDBIcon,
+    MDBDropdown,
+    MDBDropdownToggle,
+    MDBDropdownMenu,
+    MDBDropdownItem,
+    MDBBadge,
+  },
+  setup() {
+    const router = useRouter();
+    const store = useStore();
+    const dropdownAvatars = ref(false);
+    const dropdownNotifications = ref(false);
+    const logout = async () => {
+      try {
+        // Gọi API logout 
+        await store.dispatch("logout");
+
+        // Redirect đến trang login sau khi logout thành công
+        router.push('/login');
+      } catch (error) {
+        console.error('logout failed:', error);
+        // Hiển thị thông báo lỗi hoặc xử lý lỗi
+      }
+    };
+    return {
+      dropdownAvatars,
+      dropdownNotifications,
+      logout,
+    };
+  },
 };
 </script>
 
 <style scoped>
-/* Add your styles here */
+/* Add any custom styles here */
 </style>
