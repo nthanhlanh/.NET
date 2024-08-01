@@ -3,6 +3,7 @@ import HomePage from '../views/HomePage.vue';
 import LoginPage from '../views/LoginPage.vue';
 import Products from '../views/Products.vue';
 import Contact from '../views/Contact.vue';
+import UserList from '../views/UserList.vue';
 
 // Mock authentication function
 const isAuthenticated = () => {
@@ -33,6 +34,11 @@ const routes = [
         name: 'ContactPage',
         component: Contact,
         meta: { requiresAuth: true }
+    },
+    {
+        path: '/users',
+        name: 'UserList',
+        component: UserList,
     },
     {
         path: '/:pathMatch(.*)*', // Catch-all route

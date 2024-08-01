@@ -24,6 +24,23 @@
           <MDBNavbarItem href="/Conntacts"> Contacts </MDBNavbarItem>
           <MDBNavbarItem href="/Products"> Products </MDBNavbarItem>
           <MDBNavbarItem href="/login"> Login </MDBNavbarItem>
+          <MDBNavbarItem>
+            <!-- Navbar dropdown -->
+            <MDBDropdown class="nav-item" v-model="dropdown1">
+              <MDBDropdownToggle
+                tag="a"
+                class="nav-link"
+                @click="dropdown1 = !dropdown1"
+                >Hệ thống</MDBDropdownToggle
+              >
+              <MDBDropdownMenu aria-labelledby="dropdownMenuButton">
+                <MDBDropdownItem href="/users">Người dùng</MDBDropdownItem>
+                <MDBDropdownItem href="#">Nhóm người dùng</MDBDropdownItem>
+                <MDBDropdownItem href="#">Quyền</MDBDropdownItem>
+              </MDBDropdownMenu>
+            </MDBDropdown>
+          </MDBNavbarItem>
+          <MDBNavbarItem to="#" disabled> Disabled </MDBNavbarItem>
         </MDBNavbarNav>
       </MDBCollapse>
 
@@ -111,21 +128,23 @@ export default {
   setup() {
     const router = useRouter();
     const store = useStore();
+    const dropdown1 = ref(false);
     const dropdownAvatars = ref(false);
     const dropdownNotifications = ref(false);
     const logout = async () => {
       try {
-        // Gọi API logout 
+        // Gọi API logout
         await store.dispatch("logout");
 
         // Redirect đến trang login sau khi logout thành công
-        router.push('/login');
+        router.push("/login");
       } catch (error) {
-        console.error('logout failed:', error);
+        console.error("logout failed:", error);
         // Hiển thị thông báo lỗi hoặc xử lý lỗi
       }
     };
     return {
+      dropdown1,
       dropdownAvatars,
       dropdownNotifications,
       logout,

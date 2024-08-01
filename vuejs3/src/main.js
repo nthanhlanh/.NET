@@ -10,4 +10,7 @@ const app = createApp(App);
 app.use(router); // Nếu bạn sử dụng vue-router
 app.use(store); // Nếu bạn sử dụng vuex
 
+// Khi ứng dụng khởi động, kiểm tra token và lấy lại thông tin người dùng nếu có
+store.dispatch('fetchUser');
+
 app.mount('#app');
