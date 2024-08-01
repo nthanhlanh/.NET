@@ -31,12 +31,12 @@
                 tag="a"
                 class="nav-link"
                 @click="dropdown1 = !dropdown1"
-                >Hệ thống</MDBDropdownToggle
+                >System</MDBDropdownToggle
               >
               <MDBDropdownMenu aria-labelledby="dropdownMenuButton">
-                <MDBDropdownItem href="/users">Người dùng</MDBDropdownItem>
-                <MDBDropdownItem href="#">Nhóm người dùng</MDBDropdownItem>
-                <MDBDropdownItem href="#">Quyền</MDBDropdownItem>
+                <MDBDropdownItem href="/users">User</MDBDropdownItem>
+                <MDBDropdownItem href="#">Group</MDBDropdownItem>
+                <MDBDropdownItem href="#">Permission</MDBDropdownItem>
               </MDBDropdownMenu>
             </MDBDropdown>
           </MDBNavbarItem>

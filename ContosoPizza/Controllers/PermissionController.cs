@@ -6,6 +6,7 @@ namespace ContosoPizza.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [ApiExplorerSettings(GroupName = "v1")]
     public class PermissionController : ControllerBase
     {
         private readonly IPermissionService _permissionService;

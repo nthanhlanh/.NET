@@ -19,9 +19,20 @@ namespace ContosoPizza.Migrations
                 { 1, "/api/Permission", 0 },
                 { 2, "/api/Role", 0 },
                 { 3, "/api/Group", 0 },
-                { 4, "/api/Auth", 0 }
+                { 4, "/api/Auth", 0 },
+                { 5, "/api/UserGroup", 0 },
+                { 6, "/api/GroupPermission", 0 }
                 }
             );
+            migrationBuilder.InsertData(
+                table: "Groups",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                { 1, "Admin" }
+                }
+            );
+
 
         }
 

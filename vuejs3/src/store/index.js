@@ -1,6 +1,6 @@
 import { createStore } from 'vuex';
 import axios from 'axios';
-import router from '../router';
+import userApi from '@/api/userApi';
 
 export default createStore({
   state: {
@@ -29,7 +29,8 @@ export default createStore({
   actions: {
     async login({ commit, dispatch }, credentials) {
       try {
-        const response = await axios.post('http://localhost:5246/api/auth/login', credentials);
+        var defaultHostUrl = process.env.VUE_APP_API_BASE_URL || 'http://localhost:5246';
+        const response = await axios.post(`${defaultHostUrl}/api/auth/login`, credentials);
         if (response.status === 200) {
           const token = response.data.token; // Thay đổi dựa trên cấu trúc dữ liệu của bạn
           commit('setAuthToken', token);
@@ -44,19 +45,8 @@ export default createStore({
     },
     async fetchUser({ commit, state }) {
       if (state.authToken) {
-        try {
-          const userResponse = await axios.get('http://localhost:5246/api/User/details', {
-            headers: { Authorization: `Bearer ${state.authToken}` }
-          });
-          if (userResponse.status === 200) {
-            commit('setUser', userResponse.data);
-          } 
-        } catch (error) {
-          console.error('Fetching user details failed:', error);
-          commit('clearAuthToken');
-          commit('clearUser');
-          router.push('/login'); // Điều hướng về trang đăng nhập
-        }
+        const userResponse = await userApi.getUserDetails();
+        commit('setUser', userResponse.data);
       }
     },
     logout({ commit }) {

@@ -44,7 +44,7 @@ namespace ContosoPizza.Helprs
                 {
                     var permissions = await iGroupPermissionRepository.GetPermissionsByGroupIdAsync(group.Id);
                     // Kiểm tra xem nhóm có quyền cần thiết không
-                    if (permissions.Any(p => p.Name == context.Request.Path))
+                    if (permissions.Any(p => context.Request.Path.StartsWithSegments(p.Name, StringComparison.OrdinalIgnoreCase)))
                     {
                         // Nếu có quyền, tiếp tục xử lý
                         await _next(context);

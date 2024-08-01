@@ -75,6 +75,7 @@ builder.Services.AddCors(options =>
 // Đăng ký các repository
 builder.Services.AddScoped<IMyEntityRepository, MyEntityRepository>();
 builder.Services.AddScoped<IGroupRepository, GroupRepository>();
+builder.Services.AddScoped<IApplicationUserRepository, ApplicationUserRepository>();
 builder.Services.AddScoped<IUserGroupRepository, UserGroupRepository>();
 builder.Services.AddScoped<IPermissionRepository, PermissionRepository>();
 builder.Services.AddScoped<IGroupPermissionRepository, GroupPermissionRepository>();
@@ -83,6 +84,7 @@ builder.Services.AddScoped<IGroupPermissionRepository, GroupPermissionRepository
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IMyEntityService, MyEntityService>();
 builder.Services.AddScoped<IGroupService, GroupService>();
+builder.Services.AddScoped<IApplicationUserService, ApplicationUserService>();
 builder.Services.AddScoped<IUserGroupService, UserGroupService>();
 builder.Services.AddScoped<IPermissionService, PermissionService>();
 builder.Services.AddScoped<IGroupPermissionService, GroupPermissionService>();

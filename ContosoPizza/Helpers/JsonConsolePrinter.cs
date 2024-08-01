@@ -1,6 +1,6 @@
 using System.Text.Json;
 
-namespace YourNamespace.Utilities
+namespace ContosoPizza.Utilities
 {
     public static class JsonConsolePrinter
     {
